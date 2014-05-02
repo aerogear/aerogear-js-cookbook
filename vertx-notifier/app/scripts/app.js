@@ -1,10 +1,10 @@
 /*global define */
-define(['angular'], function (app) {
+define(['angular', 'aerogear'], function (app, AeroGear) {
     'use strict';
 
     return angular.module('app', [])
 
-        .controller('SendController', function($scope) {
+        .controller('SendController', function($scope, messenger) {
             $scope.name = 'Mr. Yoda';
             $scope.message = 'May Force be with You';
 
@@ -23,6 +23,17 @@ define(['angular'], function (app) {
             $rootScope.$on('message', function(event, message) {
                 $scope.messages.push(message);
             });
+        })
+
+        .factory('messenger', function() {
+            return AeroGear.Notifier({
+                name: 'messages',
+                type: 'vertx',
+                settings: {
+                    autoConnect: true,
+                    connectURL: 'localhost:9000'
+                }
+            })
         })
 
         .filter('reverse', function() {
