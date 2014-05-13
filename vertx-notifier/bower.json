@@ -2,15 +2,14 @@
   "name": "vertx-notifier",
   "version": "0.0.0",
   "dependencies": {
-    "bootstrap": "~3.0.3",
-    "requirejs": "~2.1.11",
-    "modernizr": "~2.6.2",
-    "jquery": "~2.1.1",
-    "fastclick": "~1.0.1",
-    "angular": "~1.2.16",
     "aerogear": "~1.4.0",
     "vertx": "eclipse/vert.x#v2.0.2-final",
-    "sockjs.js": "http://cdn.sockjs.org/sockjs-0.3.4.js"
+    "sockjs.js": "http://cdn.sockjs.org/sockjs-0.3.4.js",
+    "angular": "~1.2.16",
+    "jquery": "~2.1.1",
+    "requirejs": "~2.1.11",
+    "bootstrap": "~3.0.3",
+    "fastclick": "~1.0.1"
   },
   "devDependencies": {}
 }
