@@ -56,11 +56,13 @@ In order to broadcast messages, you can specify a "publish" flag:
 
 To run the example code, first [download and install Vert.x](http://vertx.io/).
 
-Then, download all dependencies:
+Note: Vert.x 2.0.2 was used in the time of releasing this cookbook, but any 2.x version should be fine.
 
-    $ npm install && bower install
+Then, download all browser dependencies:
 
-This will pull down the dependent javascript/css files, such as jquery, into the project.
+    $ bower install
+
+This will pull down the dependent javascript/css files, such as aerogear and jquery, into the project.
 
 At the end, run the demo:
 
@@ -68,6 +70,12 @@ At the end, run the demo:
 
 This will start a Vert.x server instance that will both, server application to your browser and expose an eventbus.
 
-Point your browser to [localhost:8080](http://localhost:8080) to test it out
+Point your browser to [localhost:8080](http://localhost:8080) to test it out.
+
+Then open a new browser window with the same application.
+
+If you send messages in the first window, you will see them propagated to the second window and vice versa.
+
+You should also see raw messages printed in the server console output.
 
 
