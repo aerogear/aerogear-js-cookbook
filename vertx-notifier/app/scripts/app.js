@@ -1,5 +1,5 @@
 /*global define */
-define(['angular', 'aerogear'], function (app, AeroGear) {
+define(['angular', 'aerogear'], function (angular, AeroGear) {
     'use strict';
 
     return angular.module('app', [])
@@ -20,7 +20,7 @@ define(['angular', 'aerogear'], function (app, AeroGear) {
 
             // watches changes of user name and saves it to localStorage
             $scope.$watch('name', function() {
-               localStorage.name = $scope.name;
+                localStorage.name = $scope.name;
             });
         })
 
@@ -46,7 +46,7 @@ define(['angular', 'aerogear'], function (app, AeroGear) {
                     onConnect: function() {
                         // subscribe to the channel
                         chatBus.subscribe({
-                            address: "chat.messages",
+                            address: 'chat.messages',
                             callback: function(message) {
                                 // update list of messages
                                 messageList.push(message);

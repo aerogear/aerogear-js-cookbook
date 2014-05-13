@@ -1,3 +1,4 @@
+'use strict';
 require.config({
 
     baseUrl: 'scripts',
@@ -36,8 +37,7 @@ require.config({
     }
 });
 
-require(['angular', 'app', 'bootstrap', 'fastclick.init'], function () {
-    'use strict';
+require(['angular', 'app', 'bootstrap', 'fastclick.init'], function (angular) {
 
     angular.bootstrap(document, ['app']);
 });
