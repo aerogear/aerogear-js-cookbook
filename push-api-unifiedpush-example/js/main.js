@@ -26,18 +26,25 @@ if ('serviceWorker' in navigator) { // checks if service worker is supported by 
     }).then(function(registration) {
         console.log('Service Worker is ready :^)', registration);
 
-        if (localStorage.getItem('registered')) {
-            return; // already registered, nothing to do
-        }
-
         // uses the ServiceWorkerRegistration object’s pushManager
-        // to subscribe to messages for the gcm_sender_id you added to the manifest
-        registration.pushManager.subscribe({
-            userVisibleOnly: true // notification will always be shown when a push message is received
-        }).then(function(subscription) {
-            console.log('endpoint:', subscription.endpoint); // use this value to tell FCM (GCM) where to send messages
+        // to get current subscription
+        registration.pushManager.getSubscription()
+        .then(function(subscription) {
+            if (subscription) {
+                console.log("Already subscribed", subscription);
+                return; // subscription exists, nothing to do
+            }
 
-            registerOnUPS(subscription.endpoint);
+            // subscribe to messages for the gcm_sender_id you added to the manifest
+            registration.pushManager.subscribe({
+                userVisibleOnly: true // notification will always be shown when a push message is received
+            }).then(function(subscription) {
+                console.log('endpoint:', subscription.endpoint); // use this value to tell FCM (GCM) where to send messages
+
+                registerOnUPS(subscription.endpoint);
+            }).catch(function(error) {
+                console.log('Push Manager error, can not subscribe :^(', error);
+            });
         });
     }).catch(function(error) {
         console.log('Service Worker error :^(', error);
@@ -45,16 +52,6 @@ if ('serviceWorker' in navigator) { // checks if service worker is supported by 
 }
 
 function registerOnUPS(endpoint) {
-    var idx = endpoint.lastIndexOf('/');
-
-    if (idx < 0) {
-        console.log('Can not extract subscriptionId from endpoint');
-        return;
-    }
-
-    var subscriptionId = endpoint.substring(idx + 1);
-    console.log('subscriptionId: ' + subscriptionId);
-
     // config params for UnifiedPush server
     var variantId = '<Your-Variant-ID>';
     var variantSecret = '<Your-Variant-Secret>';
@@ -65,8 +62,8 @@ function registerOnUPS(endpoint) {
 
     var settings = {
         metadata: {
-            deviceToken: subscriptionId,
-            deviceType: 'chrome',   // not required
+            deviceToken: endpoint,
+            deviceType: navigator.userAgent,    // not required
             alias: 'localhost'  // not required
         }
     };
@@ -75,7 +72,6 @@ function registerOnUPS(endpoint) {
     UPClient.registerWithPushServer(settings)
         .then(function() {
             console.log('Registered endpoint with UnifiedPush server!');
-            localStorage.setItem('registered', true);
         })
         .then(null, function() {
             console.log('Error when registering with UnifiedPush server!');

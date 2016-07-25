@@ -1,5 +1,7 @@
-Chrome Push API with AeroGear Unified Push Example
+Push API with AeroGear Unified Push Example
 ==================================================
+
+The Push API enables sending of a push message to a webapp via a push service. For more information about Push API read official draft: https://www.w3.org/TR/push-api/
 
 This sample is based on two articles from Google:
 
@@ -18,12 +20,12 @@ This video provides additional explanations and shows how it works in reality:
 
 #### Prerequisites
 
-* Chrome 42+
+* Chrome 42+ or Firefox 44+
 * AeroGear UnifiedPush server
 
 To make it workable you have to complete two steps:
 
-1. Set up your FCM/GCM Sender ID in manifest.json
+1. Set up your FCM/GCM Sender ID in manifest.json (if you test it in Google Chrome)
 2. Set up Variant-ID, Variant-Secret and URL for your AeroGear UnifiedPush Server instance in main.js
 
 For this sample you will need to run a local web server. You may already have your own setup for this. Otherwise open a terminal window, navigate to the current directory and run the following Python command to start a server:
