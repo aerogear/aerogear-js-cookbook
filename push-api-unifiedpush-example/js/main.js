@@ -66,7 +66,6 @@ function registerOnUPS(endpoint) {
     var settings = {
         metadata: {
             deviceToken: subscriptionId,
-            deviceType: 'chrome',   // not required
             alias: 'localhost'  // not required
         }
     };
