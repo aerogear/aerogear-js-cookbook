@@ -53,7 +53,7 @@ self.addEventListener('push', function(event) {
     // However you could grab some data from an API and use it to populate a notification.
 
     var title = 'AeroGear Unified Push Server';
-    var body = 'AeroGear UPS works with Chrome!';
+    var body = 'AeroGear UPS works with Push API!';
     var icon = 'images/icon.png';
     var tag = 'my-tag';
 
