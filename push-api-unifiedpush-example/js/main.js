@@ -39,9 +39,12 @@ if ('serviceWorker' in navigator) { // checks if service worker is supported by 
             registration.pushManager.subscribe({
                 userVisibleOnly: true // notification will always be shown when a push message is received
             }).then(function(subscription) {
-                console.log('endpoint:', subscription.endpoint); // use this value to tell FCM (GCM) where to send messages
+                console.log('subscription:', subscription); // the whole Subscription object
 
-                registerOnUPS(subscription.endpoint);
+                // serialization to json string will encode keys to URL-Safe Base64 encoding
+                var jsonStr = JSON.stringify(subscription);
+                var json = JSON.parse(jsonStr); // convert back to JSON for easy field access
+                registerOnUPS(json.endpoint, json.keys.p256dh, json.keys.auth);
             }).catch(function(error) {
                 console.log('Push Manager error, can not subscribe :^(', error);
             });
@@ -51,7 +54,11 @@ if ('serviceWorker' in navigator) { // checks if service worker is supported by 
     });
 }
 
-function registerOnUPS(endpoint) {
+function registerOnUPS(endpoint, publicKey, authSecret) {
+    console.log('endpoint:', endpoint);
+    console.log('publicKey:', publicKey);
+    console.log('authSecret:', authSecret);
+
     // config params for UnifiedPush server
     var variantId = '<Your-Variant-ID>';
     var variantSecret = '<Your-Variant-Secret>';
@@ -63,6 +70,8 @@ function registerOnUPS(endpoint) {
     var settings = {
         metadata: {
             deviceToken: endpoint,
+            publicKey: publicKey,
+            authSecret: authSecret,
             deviceType: navigator.userAgent,    // not required
             alias: 'localhost'  // not required
         }

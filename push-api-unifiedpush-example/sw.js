@@ -44,16 +44,8 @@ self.addEventListener('activate', function(event) {
 self.addEventListener('push', function(event) {
     console.log('Push message', event);
 
-    // A downside to the current implementation of the Push API in Chrome
-    // is that you can’t send any data with a push message.
-    // Check in console log, that PushEvent.data is null.
-    // Also see 'Browser Compatibility' section on MDN:
-    // https://developer.mozilla.org/en-US/docs/Web/API/PushEvent/PushEvent
-    // We will use some static content.
-    // However you could grab some data from an API and use it to populate a notification.
-
     var title = 'AeroGear Unified Push Server';
-    var body = 'AeroGear UPS works with Push API!';
+    var body = event.data ? event.data.text() : 'AeroGear UPS works with Push API!';
     var icon = 'images/icon.png';
     var tag = 'my-tag';
 
